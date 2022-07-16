@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 var (
@@ -12,11 +13,12 @@ var (
 )
 
 func main() {
-	for {
+	command := "Init"
+	for command != EXIT_COMMAND {
 		printPrompt()
-		command := readCommand()
-		if command == EXIT_COMMAND {
-			break
+		command = readCommand()
+		if command == "" {
+			continue
 		}
 		fmt.Printf("Unknow Command: %s\n", command)
 	}
@@ -32,5 +34,6 @@ func readCommand() string {
 	scanner := bufio.NewScanner(os.Stdin)
 	scanner.Scan()
 	command := scanner.Text()
-	return command
+
+	return strings.Trim(command, " ")
 }
